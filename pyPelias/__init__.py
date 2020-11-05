@@ -13,6 +13,16 @@ class pyPelias:
             return json
         except IndexError:
             raise Exception('could not parse location text')
+            
+     #allows to put the adress in an structured way       
+     def geocode_estructured(self,address,locality,region):
+        r = requests.get(self.http_url + '/v1/search/structured?address='+address+'&locality='+locality+'&region='+region)
+        json = r.json()
+        try:
+            loc = json['features'][0]['geometry']['coordinates']
+            return json
+        except IndexError:
+            raise Exception('could not parse location text')
 
     def reverse(self, lat_long):
         r = requests.get(self.http_url + '/v1/reverse?point.lon='+lat_long[1]+'&point.lat='+lat_long[0])
